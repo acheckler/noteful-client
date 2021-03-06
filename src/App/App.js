@@ -5,9 +5,11 @@ import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
+import AddFolder from '../AddFolder/AddFolder';
 import './App.css';
 import config from '../config';
 import ApiContext from '../ApiContext';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 class App extends Component {
     state = {
@@ -15,7 +17,7 @@ class App extends Component {
         folders: []
     };
 
-    componentDidMount() {
+    fetchData = () => {
         Promise.all([
             fetch(`${config.API_ENDPOINT}/notes`),
             fetch(`${config.API_ENDPOINT}/folders`)
@@ -35,6 +37,13 @@ class App extends Component {
                 console.error({error});
             });
     }
+
+        
+
+    
+    componentDidMount() {
+        this.fetchData()
+    }
     
 
     handleDeleteNote = noteId => {
@@ -43,9 +52,32 @@ class App extends Component {
         });
     };
 
+    handleAddFolder = folderName => {
+        const options = {
+            method: 'POST',
+            headers: {
+             'Content-Type': 'application/json'
+           },
+            body: JSON.stringify({name:folderName})
+        }
+        fetch(`${config.API_ENDPOINT}/folders`, options)
+            .then((foldersRes) => {
+                if (!foldersRes.ok) {
+                    throw new Error ('error')
+                }
+                return foldersRes.json()
+            })
+            .then((data)=> {
+                this.fetchData();
+            })
+            .catch((error)=> console.log(error))
+            
+    
+    }
+
     renderNavRoutes() {
         return (
-            <>
+            <ErrorBoundary >
                 {['/', '/folder/:folderId'].map(path => (
                     <Route
                         exact
@@ -57,14 +89,14 @@ class App extends Component {
                 <Route path="/note/:noteId" component={NotePageNav} />
                 <Route path="/add-folder" component={NotePageNav} />
                 <Route path="/add-note" component={NotePageNav} />
-            </>
+                </ErrorBoundary>
         );
     }
 
 
     renderMainRoutes() {
         return (
-            <>
+            <ErrorBoundary >
                 {['/', '/folder/:folderId'].map(path => (
                     <Route
                         exact
@@ -74,7 +106,8 @@ class App extends Component {
                     />
                 ))}
                 <Route path="/note/:noteId" component={NotePageMain} />
-            </>
+                <Route path="/add-folder" component={AddFolder} />
+            </ErrorBoundary>
         );
     }
 
@@ -82,6 +115,7 @@ class App extends Component {
         const value = {
             notes: this.state.notes,
             folders: this.state.folders,
+            addFolder: this.handleAddFolder,
             deleteNote: this.handleDeleteNote
         };
         return (

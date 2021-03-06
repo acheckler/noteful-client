@@ -15,7 +15,7 @@ export default class NotePageMain extends React.Component {
   handleDeleteNote = noteId => {
     this.props.history.push(`/`)
   }
-
+  
   render() {
     const { notes=[] } = this.context
     const { noteId } = this.props.match.params
