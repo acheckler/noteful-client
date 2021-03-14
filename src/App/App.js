@@ -6,6 +6,7 @@ import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import AddFolder from '../AddFolder/AddFolder';
+import AddNote from '../AddNote/AddNote'
 import './App.css';
 import config from '../config';
 import ApiContext from '../ApiContext';
@@ -75,6 +76,28 @@ class App extends Component {
     
     }
 
+    handleAddNote = (noteName, folderId, noteContent) => {
+        console.log(noteName, folderId);
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name:noteName, folderId:folderId, content:noteContent})
+        }
+        fetch(`${config.API_ENDPOINT}/notes`, options)
+            .then((notesRes) => {
+                if (!notesRes.ok) {
+                    throw new Error ('error')
+                }
+                return notesRes.json()
+            })
+            .then((data)=> {
+                this.fetchData();
+            })
+            .catch((error)=> console.log(error))
+    }
+
     renderNavRoutes() {
         return (
             <ErrorBoundary >
@@ -88,7 +111,7 @@ class App extends Component {
                 ))}
                 <Route path="/note/:noteId" component={NotePageNav} />
                 <Route path="/add-folder" component={NotePageNav} />
-                <Route path="/add-note" component={NotePageNav} />
+                
                 </ErrorBoundary>
         );
     }
@@ -107,6 +130,7 @@ class App extends Component {
                 ))}
                 <Route path="/note/:noteId" component={NotePageMain} />
                 <Route path="/add-folder" component={AddFolder} />
+                <Route path="/add-note" component={AddNote} />
             </ErrorBoundary>
         );
     }
@@ -116,6 +140,7 @@ class App extends Component {
             notes: this.state.notes,
             folders: this.state.folders,
             addFolder: this.handleAddFolder,
+            addNote: this.handleAddNote,
             deleteNote: this.handleDeleteNote
         };
         return (

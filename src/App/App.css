@@ -38,3 +38,8 @@
   height: calc(100vh - 120px);
   overflow: auto;
 }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}

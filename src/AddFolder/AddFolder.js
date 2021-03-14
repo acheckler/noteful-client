@@ -15,7 +15,6 @@ class AddFolder extends Component {
 
 
   render() {
-      console.log(this.props)
     return (
       <form className="AddFolder" onSubmit={e => this.handleSubmit(e)}>
         <h2>Create A Folder</h2>
