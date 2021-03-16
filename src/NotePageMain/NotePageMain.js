@@ -3,6 +3,8 @@ import Note from '../Note/Note'
 import './NotePageMain.css'
 import ApiContext from '../ApiContext'
 import { findNote } from '../notes-helpers'
+import PropTypes from 'prop-types'
+
 
 export default class NotePageMain extends React.Component {
   static defaultProps = {
@@ -11,6 +13,11 @@ export default class NotePageMain extends React.Component {
     }
   }
   static contextType = ApiContext
+
+  static propTypes = {
+    history: PropTypes.object,
+    match: PropTypes.object
+  }
 
   handleDeleteNote = noteId => {
     this.props.history.push(`/`)

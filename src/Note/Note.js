@@ -5,8 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Note.css'
 import config from '../config'
 import ApiContext from '../ApiContext'
+import PropTypes from 'prop-types'
 
 export default class Note extends React.Component {
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    modified: PropTypes.string,
+  }
   static defaultProps ={
     onDeleteNote: () => {},
   }
@@ -30,7 +36,6 @@ export default class Note extends React.Component {
       .then(() => {
         this.context.deleteNote(noteId)
         // allow parent to perform extra behaviour
-        this.props.onDeleteNote(noteId)
       })
       .catch(error => {
         console.error({ error })

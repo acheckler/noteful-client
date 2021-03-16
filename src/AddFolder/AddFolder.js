@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import ApiContext from '../ApiContext'
+import PropTypes from 'prop-types'
 
 
 
 class AddFolder extends Component {
     static contextType = ApiContext
+    static propTypes = {
+      history: PropTypes.object
+    }
     handleSubmit(event) {
     event.preventDefault();
     const folderName = event.target.name.value
@@ -18,16 +22,16 @@ class AddFolder extends Component {
     return (
       <form className="AddFolder" onSubmit={e => this.handleSubmit(e)}>
         <h2>Create A Folder</h2>
-        <div className="form-group">
-          <label htmlFor="name">Name *</label>
+        <div className="folderForm">
+          <label htmlFor="name">Name:</label>
           <input
             type="text"
-            className="form_creation_control"
+            className="folderName"
             name="name"
             id="name"
           />
         </div>
-        <div className="registration__button__group">
+        <div className="create-folder-button">
             <button type="submit" className="registration__button">
             Save
           </button>

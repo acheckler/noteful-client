@@ -43,3 +43,27 @@
   display: flex;
   flex-direction: column;
 }
+
+.AddFolder, .AddNote {
+  color:#bdbdbd;
+}
+
+.form-group {
+  width: 25%
+}
+
+input[type="text"] {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.noteContent {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.choose-folder, .create-note-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}

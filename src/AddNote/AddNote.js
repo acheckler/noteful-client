@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import ApiContext from "../ApiContext";
+import PropTypes from 'prop-types'
 
 class AddNote extends Component {
   static contextType = ApiContext;
+  static propTypes = {
+    history: PropTypes.object
+  }
 
   state = {
     folderId: "",
@@ -25,7 +29,7 @@ class AddNote extends Component {
     });
   };
   render() {
-    const { folders = [], notes = [] } = this.context;
+    const { folders = []} = this.context;
     return (
       <form className="AddNote" onSubmit={(e) => this.handleSubmit(e)}>
         <h2>Create A Note</h2>
@@ -37,7 +41,7 @@ class AddNote extends Component {
             name="name"
             id="name"
           />
-          <label htmlFor="noteContent">Content:</label>
+          <label htmlFor="noteContent" className="noteContent">Content:</label>
           <textarea
             rows="14"
             type="text"
@@ -45,7 +49,7 @@ class AddNote extends Component {
             name="noteContent"
             id="content"
           />
-          <select name="folder" onChange={(e) => this.selectFolder(e)}>
+          <select name="folder" className="choose-folder" onChange={(e) => this.selectFolder(e)}>
             <option value="">Choose Folder:</option>
             {folders.map((folder) => (
               <option key={folder.id} value={folder.id}>
@@ -54,7 +58,7 @@ class AddNote extends Component {
             ))}
           </select>
         </div>
-        <div className="registration__button__group">
+        <div className="create-note-button">
           <button type="submit" className="registration__button">
             Save
           </button>
@@ -65,42 +69,3 @@ class AddNote extends Component {
 }
 export default AddNote;
 
-//  import React from 'react'
-// import Note from '../Note/Note'
-// import './NotePageMain.css'
-// import ApiContext from '../ApiContext'
-// import { findNote } from '../notes-helpers'
-
-// export default class NotePageMain extends React.Component {
-//   static defaultProps = {
-//     match: {
-//       params: {}
-//     }
-//   }
-//   static contextType = ApiContext
-
-//   handleDeleteNote = noteId => {
-//     this.props.history.push(`/`)
-//   }
-
-//   render() {
-//     const { notes=[] } = this.context
-//     const { noteId } = this.props.match.params
-//     const note = findNote(notes, noteId) || { content: '' }
-//     return (
-//       <section className='NotePageMain'>
-//         <Note
-//           id={note.id}
-//           name={note.name}
-//           modified={note.modified}
-//           onDeleteNote={this.handleDeleteNote}
-//         />
-//         <div className='NotePageMain__content'>
-//           {note.content.split(/\n \r|\n/).map((para, i) =>
-//             <p key={i}>{para}</p>
-//           )}
-//         </div>
-//       </section>
-//     )
-//   }
-// }
