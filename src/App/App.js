@@ -77,7 +77,7 @@ class App extends Component {
     }
 
     handleAddNote = (noteName, folderId, noteContent) => {
-        console.log(noteName, folderId);
+        
         const options = {
             method: 'POST',
             headers: {

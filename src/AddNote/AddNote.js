@@ -16,7 +16,6 @@ class AddNote extends Component {
     event.preventDefault();
     const noteName = event.target.name.value;
     const noteContent = event.target.noteContent.value;
-    console.log(noteContent);
     this.context.addNote(noteName, this.state.folderId, noteContent);
     this.props.history.push(`/`);
     // process form values here
