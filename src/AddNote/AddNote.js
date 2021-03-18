@@ -33,12 +33,13 @@ class AddNote extends Component {
       <form className="AddNote" onSubmit={(e) => this.handleSubmit(e)}>
         <h2>Create A Note</h2>
         <div className="form-group">
-          <label htmlFor="name">Name *</label>
+          <label htmlFor="name">Name:</label>
           <input
             type="text"
             className="form_creation_control"
             name="name"
             id="name"
+            required
           />
           <label htmlFor="noteContent" className="noteContent">Content:</label>
           <textarea
@@ -47,8 +48,9 @@ class AddNote extends Component {
             className="inputField"
             name="noteContent"
             id="content"
+            required
           />
-          <select name="folder" className="choose-folder" onChange={(e) => this.selectFolder(e)}>
+          <select name="folder" className="choose-folder" onChange={(e) => this.selectFolder(e)} required>
             <option value="">Choose Folder:</option>
             {folders.map((folder) => (
               <option key={folder.id} value={folder.id}>

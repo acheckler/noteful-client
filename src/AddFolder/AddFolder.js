@@ -29,6 +29,7 @@ class AddFolder extends Component {
             className="folderName"
             name="name"
             id="name"
+            required
           />
         </div>
         <div className="create-folder-button">
