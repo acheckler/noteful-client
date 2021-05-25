@@ -16,7 +16,8 @@ export default class NotePageMain extends React.Component {
 
   static propTypes = {
     history: PropTypes.object,
-    match: PropTypes.object
+    match: PropTypes.object,
+    id: PropTypes.number
   }
 
   handleDeleteNote = noteId => {
@@ -31,8 +32,8 @@ export default class NotePageMain extends React.Component {
       <section className='NotePageMain'>
         <Note
           id={note.id}
-          name={note.name}
-          modified={note.modified}
+          name={note.note_name}
+          modified={note.modified_date}
           onDeleteNote={this.handleDeleteNote}
         />
         <div className='NotePageMain__content'>

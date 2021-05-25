@@ -34,9 +34,11 @@ class App extends Component {
             .then(([notes, folders]) => {
                 this.setState({notes, folders});
             })
+            // .then(response => console.log(response))
             .catch(error => {
                 console.error({error});
             });
+            
     }
 
         
@@ -48,9 +50,11 @@ class App extends Component {
     
 
     handleDeleteNote = noteId => {
+        console.log('noteId')
         this.setState({
             notes: this.state.notes.filter(note => note.id !== noteId)
-        });
+        },
+        () => console.log('hello'));  
     };
 
     handleAddFolder = folderName => {
@@ -59,7 +63,7 @@ class App extends Component {
             headers: {
              'Content-Type': 'application/json'
            },
-            body: JSON.stringify({name:folderName})
+            body: JSON.stringify({folder_name:folderName})
         }
         fetch(`${config.API_ENDPOINT}/folders`, options)
             .then((foldersRes) => {
@@ -83,7 +87,7 @@ class App extends Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name:noteName, folderId:folderId, content:noteContent})
+            body: JSON.stringify({note_name:noteName, folder_id:folderId, content:noteContent})
         }
         fetch(`${config.API_ENDPOINT}/notes`, options)
             .then((notesRes) => {
@@ -141,7 +145,8 @@ class App extends Component {
             folders: this.state.folders,
             addFolder: this.handleAddFolder,
             addNote: this.handleAddNote,
-            deleteNote: this.handleDeleteNote
+            deleteNote: this.handleDeleteNote,
+            fetchData: this.fetchData
         };
         return (
             <ApiContext.Provider value={value}>

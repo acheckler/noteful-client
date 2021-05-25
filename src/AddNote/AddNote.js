@@ -29,6 +29,7 @@ class AddNote extends Component {
   };
   render() {
     const { folders = []} = this.context;
+    
     return (
       <form className="AddNote" onSubmit={(e) => this.handleSubmit(e)}>
         <h2>Create A Note</h2>
@@ -54,7 +55,7 @@ class AddNote extends Component {
             <option value="">Choose Folder:</option>
             {folders.map((folder) => (
               <option key={folder.id} value={folder.id}>
-                {folder.name}
+                {folder.folder_name}
               </option>
             ))}
           </select>

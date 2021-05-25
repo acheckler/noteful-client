@@ -9,7 +9,8 @@ import PropTypes from 'prop-types'
 
 export default class Note extends React.Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    //id: PropTypes.string.isRequired
     name: PropTypes.string,
     modified: PropTypes.string,
   }
@@ -17,7 +18,9 @@ export default class Note extends React.Component {
     onDeleteNote: () => {},
   }
   static contextType = ApiContext;
-
+  //from event listener 'addnote' in addnote.js
+  // this.context.addNote(noteName, this.state.folderId, noteContent);
+  // this.props.history.push(`/`);
   handleClickDelete = e => {
     e.preventDefault()
     const noteId = this.props.id
@@ -29,17 +32,14 @@ export default class Note extends React.Component {
       },
     })
       .then(res => {
+        this.context.deleteNote(noteId)
         if (!res.ok)
           return res.json().then(e => Promise.reject(e))
-        return res.json()
-      })
-      .then(() => {
-        this.context.deleteNote(noteId)
-        // allow parent to perform extra behaviour
       })
       .catch(error => {
         console.error({ error })
       })
+
   }
 
   render() {
