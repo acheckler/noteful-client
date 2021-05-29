@@ -34,28 +34,22 @@ class App extends Component {
             .then(([notes, folders]) => {
                 this.setState({notes, folders});
             })
-            // .then(response => console.log(response))
             .catch(error => {
                 console.error({error});
             });
             
     }
 
-        
-
-    
     componentDidMount() {
         this.fetchData()
     }
     
 
     handleDeleteNote = noteId => {
-        console.log('noteId')
         this.setState({
             notes: this.state.notes.filter(note => note.id !== noteId)
-        },
-        () => console.log('hello'));  
-    };
+        });
+    }
 
     handleAddFolder = folderName => {
         const options = {
